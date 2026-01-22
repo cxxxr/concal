@@ -1,14 +1,18 @@
+(defpackage #:concal.routes
+  (:use #:cl)
+  (:export #:setup-routes))
+
 (in-package #:concal.routes)
 
 (defun setup-routes ()
   "Set up all application routes."
   ;; Main page
   (hunchentoot:define-easy-handler (index :uri "/") ()
-    (concal.handlers:handle-index))
+    (concal.handlers.pages:handle-index))
 
   ;; Calendar partial (HTMX)
   (hunchentoot:define-easy-handler (calendar :uri "/calendar") ()
-    (concal.handlers:handle-calendar))
+    (concal.handlers.pages:handle-calendar))
 
   ;; Toggle API (HTMX)
   ;; Using a dispatcher for dynamic routes
@@ -23,4 +27,4 @@
          (date-str (nth-value 1 (cl-ppcre:scan-to-strings
                                  "^/api/toggle/(.+)$" uri))))
     (when date-str
-      (concal.handlers:handle-toggle (aref date-str 0)))))
+      (concal.handlers.api:handle-toggle (aref date-str 0)))))

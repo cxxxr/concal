@@ -1,4 +1,10 @@
-(in-package #:concal.views)
+(defpackage #:concal.views.components
+  (:use #:cl)
+  (:export #:render-day-cell
+           #:render-calendar-header
+           #:render-weekday-header))
+
+(in-package #:concal.views.components)
 
 (defun render-day-cell (date completed-p is-today-p is-current-month-p)
   "Render a single day cell for the calendar.

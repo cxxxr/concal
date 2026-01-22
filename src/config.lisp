@@ -1,3 +1,13 @@
+(defpackage #:concal.config
+  (:use #:cl)
+  (:export #:*db-host*
+           #:*db-port*
+           #:*db-name*
+           #:*db-user*
+           #:*db-password*
+           #:*server-port*
+           #:*static-directory*))
+
 (in-package #:concal.config)
 
 (defvar *db-host* (or (uiop:getenv "CONCAL_DB_HOST") "localhost"))

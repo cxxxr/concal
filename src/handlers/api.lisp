@@ -1,4 +1,8 @@
-(in-package #:concal.handlers)
+(defpackage #:concal.handlers.api
+  (:use #:cl)
+  (:export #:handle-toggle))
+
+(in-package #:concal.handlers.api)
 
 (defun parse-date-string (date-str)
   "Parse a date string in YYYY-MM-DD format to local-time:timestamp."
@@ -15,8 +19,8 @@
    Returns updated day cell HTML for HTMX swap."
   (let ((date (parse-date-string date-str)))
     (if date
-        (let* ((record (concal.models:toggle-record date))
-               (completed-p (concal.models:habit-record-completed record))
+        (let* ((record (concal.models.habit-record:toggle-record date))
+               (completed-p (concal.models.habit-record:habit-record-completed record))
                (today (local-time:now))
                (today-str (local-time:format-timestring
                            nil today
@@ -25,7 +29,7 @@
                ;; For simplicity, assume it's current month (could be improved)
                (is-current-month-p t))
           (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
-          (concal.views:render-day-cell date completed-p is-today-p is-current-month-p))
+          (concal.views.components:render-day-cell date completed-p is-today-p is-current-month-p))
         (progn
           (setf (hunchentoot:return-code*) hunchentoot:+http-bad-request+)
           "Invalid date format"))))

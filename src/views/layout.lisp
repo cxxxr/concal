@@ -1,4 +1,8 @@
-(in-package #:concal.views)
+(defpackage #:concal.views.layout
+  (:use #:cl)
+  (:export #:render-page))
+
+(in-package #:concal.views.layout)
 
 (defun render-page (title body)
   "Render the main page layout with HTMX support."

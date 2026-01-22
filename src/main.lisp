@@ -1,3 +1,9 @@
+(defpackage #:concal
+  (:use #:cl)
+  (:export #:start
+           #:stop
+           #:restart-server))
+
 (in-package #:concal)
 
 (defun start ()
@@ -6,11 +12,11 @@
 
   ;; Connect to database
   (format t "~&Connecting to database...~%")
-  (concal.db:connect-db)
+  (concal.db.connection:connect-db)
 
   ;; Ensure tables exist
   (format t "~&Ensuring database tables...~%")
-  (concal.db:ensure-tables)
+  (concal.db.migrations:ensure-tables)
 
   ;; Start web server
   (format t "~&Starting web server...~%")
@@ -23,7 +29,7 @@
   "Stop the ConCal application."
   (format t "~&Stopping ConCal...~%")
   (concal.server:stop-server)
-  (concal.db:disconnect-db)
+  (concal.db.connection:disconnect-db)
   (format t "~&ConCal stopped.~%"))
 
 (defun restart-server ()

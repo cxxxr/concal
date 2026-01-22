@@ -1,4 +1,14 @@
-(in-package #:concal.models)
+(defpackage #:concal.models.habit-record
+  (:use #:cl #:mito)
+  (:export #:habit-record
+           #:habit-record-date
+           #:habit-record-completed
+           #:habit-record-completed-at
+           #:find-record-by-date
+           #:toggle-record
+           #:get-records-for-month))
+
+(in-package #:concal.models.habit-record)
 
 (mito:deftable habit-record ()
   ((date :col-type :date

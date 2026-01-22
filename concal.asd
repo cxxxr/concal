@@ -15,15 +15,14 @@
   :serial t
   :components ((:module "src"
                 :components
-                ((:file "package")
-                 (:file "config")
+                ((:file "config")
+                 (:module "models"
+                  :components
+                  ((:file "habit-record")))
                  (:module "db"
                   :components
                   ((:file "connection")
                    (:file "migrations")))
-                 (:module "models"
-                  :components
-                  ((:file "habit-record")))
                  (:module "views"
                   :components
                   ((:file "layout")

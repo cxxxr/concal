@@ -1,4 +1,9 @@
-(in-package #:concal.db)
+(defpackage #:concal.db.connection
+  (:use #:cl)
+  (:export #:connect-db
+           #:disconnect-db))
+
+(in-package #:concal.db.connection)
 
 (defun connect-db ()
   "Connect to PostgreSQL database using Mito."

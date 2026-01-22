@@ -1,0 +1,76 @@
+version: 2
+
+validation:
+  limits:
+    max_total_changed_lines: 500
+    max_delete_ratio: 1
+    max_files_changed: 15
+    severity: warning
+
+  ai:
+    system_prompt: |
+      You are a senior Common Lisp engineer working on the concal project.
+      This project is a habit-tracking calendar built with Hunchentoot, Spinneret,
+      HTMX, and Mito (PostgreSQL). Follow Common Lisp best practices, idiomatic
+      patterns, and the project's architecture.
+    rules:
+      - name: project_structure
+        prompt: |
+          Project structure rules:
+          - Are ASDF system and package definitions updated when adding new files?
+          - Is web entry code in src/main.lisp and server setup in src/server.lisp?
+          - Are route definitions centralized in src/routes.lisp?
+          - Are handlers kept in src/handlers/ and views in src/views/ with clear separation?
+
+      - name: error_handling
+        prompt: |
+          Error handling rules:
+          - Are errors from I/O, database, or external calls handled with conditions?
+          - Do error messages include descriptive context for logs/debugging?
+          - Are handler-level failures translated into proper HTTP responses?
+          - Do library functions signal/return errors instead of aborting the process?
+
+      - name: database_safety
+        prompt: |
+          Database safety rules:
+          - Are SQL queries parameterized to avoid injection?
+          - Are Mito transactions used for multi-step DB changes?
+          - Are migrations updated when schema changes are introduced?
+          - Is connection management centralized in src/db/connection.lisp?
+
+      - name: routing_and_handlers
+        prompt: |
+          Routing and handler rules:
+          - Do handlers return the expected HTML/HTMX fragments?
+          - Are HTTP methods and paths consistent with README API docs?
+          - Are side effects limited to handlers or service layers, not views?
+
+      - name: views_and_html
+        prompt: |
+          View and HTML rules:
+          - Are Spinneret templates kept in src/views/ and not mixed with handlers?
+          - Are HTMX attributes used correctly for partial updates?
+          - Is HTML structure valid and accessible (labels, buttons, semantics)?
+
+      - name: documentation
+        severity: warning
+        prompt: |
+          Documentation rules:
+          - Do exported functions, macros, and special variables have docstrings?
+          - Do docstrings start with the name of the thing being documented?
+          - Are user-facing changes reflected in README or API docs when needed?
+
+      - name: lisp_idioms
+        prompt: |
+          Common Lisp idioms and best practices:
+          - Are names short and meaningful, using *earmuffs* for special vars?
+          - Is code structured around pure functions where practical?
+          - Are macros used judiciously, not to hide control flow?
+          - Are packages and symbols properly qualified?
+
+      - name: testing
+        prompt: |
+          Testing rules:
+          - Are new behaviors covered with unit tests where practical?
+          - Are tests placed alongside their code or in a dedicated test system?
+          - Do tests cover both success and failure cases for handlers and models?
