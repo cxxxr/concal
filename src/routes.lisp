@@ -1,7 +1,6 @@
 (defpackage #:concal.routes
   (:use #:cl)
   (:export #:setup-routes))
-
 (in-package #:concal.routes)
 
 (defun setup-routes ()

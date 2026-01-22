@@ -29,6 +29,7 @@ validation:
           - Does the package name reflect the file path? (e.g., src/views/calendar.lisp → concal.views.calendar)
           - Is there NO separate package.lisp collecting all package definitions?
           - Does defpackage appear before in-package in each file?
+          - Is there NO blank line between defpackage and in-package?
           - Are :export lists minimal and explicit, exporting only the public API?
           - Is the ASDF :components order correct for package dependencies?
 

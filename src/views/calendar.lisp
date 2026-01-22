@@ -1,7 +1,6 @@
 (defpackage #:concal.views.calendar
   (:use #:cl)
   (:export #:render-calendar))
-
 (in-package #:concal.views.calendar)
 
 (defun get-first-day-of-week (year month)

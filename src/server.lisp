@@ -2,7 +2,6 @@
   (:use #:cl)
   (:export #:start-server
            #:stop-server))
-
 (in-package #:concal.server)
 
 (defvar *acceptor* nil

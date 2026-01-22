@@ -2,7 +2,6 @@
   (:use #:cl)
   (:export #:handle-index
            #:handle-calendar))
-
 (in-package #:concal.handlers.pages)
 
 (defun handle-index ()

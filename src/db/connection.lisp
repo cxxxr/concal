@@ -2,7 +2,6 @@
   (:use #:cl)
   (:export #:connect-db
            #:disconnect-db))
-
 (in-package #:concal.db.connection)
 
 (defun connect-db ()

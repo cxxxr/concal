@@ -7,7 +7,6 @@
            #:find-record-by-date
            #:toggle-record
            #:get-records-for-month))
-
 (in-package #:concal.models.habit-record)
 
 (mito:deftable habit-record ()

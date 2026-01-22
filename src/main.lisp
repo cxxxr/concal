@@ -3,7 +3,6 @@
   (:export #:start
            #:stop
            #:restart-server))
-
 (in-package #:concal)
 
 (defun start ()

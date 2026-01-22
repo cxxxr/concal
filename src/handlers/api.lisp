@@ -1,7 +1,6 @@
 (defpackage #:concal.handlers.api
   (:use #:cl)
   (:export #:handle-toggle))
-
 (in-package #:concal.handlers.api)
 
 (defun parse-date-string (date-str)

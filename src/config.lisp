@@ -7,7 +7,6 @@
            #:*db-password*
            #:*server-port*
            #:*static-directory*))
-
 (in-package #:concal.config)
 
 (defvar *db-host* (or (uiop:getenv "CONCAL_DB_HOST") "localhost"))

@@ -1,7 +1,6 @@
 (defpackage #:concal.views.layout
   (:use #:cl)
   (:export #:render-page))
-
 (in-package #:concal.views.layout)
 
 (defun render-page (title body)
