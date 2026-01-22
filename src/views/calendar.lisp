@@ -44,7 +44,8 @@
                                 nil date
                                 :format '(:year "-" (:month 2) "-" (:day 2))))
                      (completed-p (gethash date-str records)))
-                (:raw (concal.views.components:render-day-cell date completed-p (string= date-str today-str) nil))))
+                (:raw (concal.views.components:render-day-cell
+                       date completed-p (string= date-str today-str) nil))))
             ;; Current month's days
             (dotimes (i days-in-month)
               (let* ((day (1+ i))
@@ -53,7 +54,8 @@
                                 nil date
                                 :format '(:year "-" (:month 2) "-" (:day 2))))
                      (completed-p (gethash date-str records)))
-                (:raw (concal.views.components:render-day-cell date completed-p (string= date-str today-str) t))))
+                (:raw (concal.views.components:render-day-cell
+                       date completed-p (string= date-str today-str) t))))
             ;; Next month's leading days
             (let* ((total-cells (+ first-day-of-week days-in-month))
                    (remaining (mod (- 7 (mod total-cells 7)) 7))
@@ -66,4 +68,5 @@
                                   nil date
                                   :format '(:year "-" (:month 2) "-" (:day 2))))
                        (completed-p (gethash date-str records)))
-                  (:raw (concal.views.components:render-day-cell date completed-p (string= date-str today-str) nil)))))))))
+                  (:raw (concal.views.components:render-day-cell
+                         date completed-p (string= date-str today-str) nil)))))))))

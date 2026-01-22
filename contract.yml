@@ -84,3 +84,11 @@ validation:
           - Are new behaviors covered with unit tests where practical?
           - Are tests placed alongside their code or in a dedicated test system?
           - Do tests cover both success and failure cases for handlers and models?
+
+      - name: linting
+        prompt: |
+          Linting rules (mallet):
+          - Does `mallet src/` pass without errors before committing?
+          - Are lines kept under 100 characters (line-length rule)?
+          - Is the .mallet.lisp config updated when project conventions change?
+          - Run `mallet --preset all src/` to see all potential issues.
