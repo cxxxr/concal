@@ -24,9 +24,12 @@
   ;; Create and start acceptor
   (setf *acceptor*
         (make-instance 'hunchentoot:easy-acceptor
+                       :address concal.config:*server-host*
                        :port concal.config:*server-port*))
   (hunchentoot:start *acceptor*)
-  (format t "~&Server started on port ~d~%" concal.config:*server-port*))
+  (format t "~&Server started on ~a:~d~%"
+          concal.config:*server-host*
+          concal.config:*server-port*))
 
 (defun stop-server ()
   "Stop the web server."

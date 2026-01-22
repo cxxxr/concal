@@ -22,7 +22,9 @@
   (concal.server:start-server)
 
   (format t "~&ConCal is ready!~%")
-  (format t "~&Access at http://localhost:~d~%" concal.config:*server-port*))
+  (format t "~&Access at http://~a:~d~%"
+          concal.config:*server-host*
+          concal.config:*server-port*))
 
 (defun stop ()
   "Stop the ConCal application."
