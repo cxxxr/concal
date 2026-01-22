@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: concal-postgres
+    environment:
+      POSTGRES_USER: concal
+      POSTGRES_PASSWORD: concal_password
+      POSTGRES_DB: concal
+    ports:
+      - "5432:5432"
+    volumes:
+      - concal-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U concal -d concal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  concal-postgres-data:

@@ -1,0 +1,17 @@
+# Nix
+result
+result-*
+
+# Common Lisp
+*.fasl
+*.fas
+*.lib
+*.o
+
+# Editor
+*~
+\#*\#
+.#*
+
+# direnv
+.direnv/

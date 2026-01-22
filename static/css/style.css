@@ -1,0 +1,269 @@
+/* Reset and Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* Container */
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2196F3;
+}
+
+/* Calendar Header */
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.month-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+}
+
+.nav-btn,
+.today-btn {
+  padding: 8px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, transform 0.1s;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.nav-btn:active,
+.today-btn:active {
+  background-color: #e0e0e0;
+  transform: scale(0.95);
+}
+
+.today-btn {
+  font-size: 0.875rem;
+  padding: 8px 12px;
+}
+
+/* Weekday Header */
+.weekday-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #666;
+  padding: 4px 0;
+}
+
+.weekday:first-child {
+  color: #e53935;
+}
+
+.weekday:last-child {
+  color: #1976D2;
+}
+
+/* Calendar Grid */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* Day Cell */
+.day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+
+.day-cell:active {
+  transform: scale(0.92);
+}
+
+.day-number {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.check-mark {
+  font-size: 0.6rem;
+  margin-top: 2px;
+}
+
+/* Completed state */
+.day-cell.completed {
+  background-color: #4CAF50;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+}
+
+.day-cell.completed .check-mark {
+  color: #fff;
+}
+
+/* Today highlight */
+.day-cell.today {
+  border: 2px solid #2196F3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.day-cell.today.completed {
+  border-color: #1976D2;
+}
+
+/* Other month (faded) */
+.day-cell.other-month {
+  opacity: 0.35;
+}
+
+.day-cell.other-month:active {
+  transform: scale(0.95);
+}
+
+/* Sunday (first column) */
+.calendar-grid .day-cell:nth-child(7n + 1) .day-number {
+  color: #e53935;
+}
+
+.calendar-grid .day-cell:nth-child(7n + 1).completed .day-number {
+  color: #fff;
+}
+
+/* Saturday (last column) */
+.calendar-grid .day-cell:nth-child(7n) .day-number {
+  color: #1976D2;
+}
+
+.calendar-grid .day-cell:nth-child(7n).completed .day-number {
+  color: #fff;
+}
+
+/* HTMX loading indicator */
+.htmx-request {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.htmx-request .day-cell {
+  cursor: wait;
+}
+
+/* Responsive adjustments */
+@media (min-width: 400px) {
+  .day-cell {
+    border-radius: 14px;
+  }
+
+  .day-number {
+    font-size: 1rem;
+  }
+
+  .check-mark {
+    font-size: 0.7rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .container {
+    padding: 24px;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  .month-title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  .day-cell {
+    background-color: #1e1e1e;
+  }
+
+  .nav-btn,
+  .today-btn {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+  }
+
+  .nav-btn:active,
+  .today-btn:active {
+    background-color: #3d3d3d;
+  }
+
+  .weekday {
+    color: #999;
+  }
+
+  .day-cell.completed {
+    background-color: #388E3C;
+  }
+}
+
+/* Safe area for notched devices */
+@supports (padding: max(0px)) {
+  .container {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
