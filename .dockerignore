@@ -1,0 +1,26 @@
+# Nix
+result
+result-*
+.direnv/
+
+# Git
+.git/
+.gitignore
+
+# Editor
+*~
+\#*\#
+.#*
+
+# Common Lisp build artifacts
+*.fasl
+*.fas
+*.lib
+*.o
+
+# Project files not needed in container
+.mallet.lisp
+contract.yml
+flake.nix
+flake.lock
+README.md
