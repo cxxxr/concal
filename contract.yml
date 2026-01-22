@@ -22,6 +22,16 @@ validation:
           - Are route definitions centralized in src/routes.lisp?
           - Are handlers kept in src/handlers/ and views in src/views/ with clear separation?
 
+      - name: package_organization
+        prompt: |
+          Package organization rules (one package per file):
+          - Does each source file define exactly one package at the top with defpackage?
+          - Does the package name reflect the file path? (e.g., src/views/calendar.lisp → concal.views.calendar)
+          - Is there NO separate package.lisp collecting all package definitions?
+          - Does defpackage appear before in-package in each file?
+          - Are :export lists minimal and explicit, exporting only the public API?
+          - Is the ASDF :components order correct for package dependencies?
+
       - name: error_handling
         prompt: |
           Error handling rules:
