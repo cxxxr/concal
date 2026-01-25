@@ -39,3 +39,20 @@
                  (:file "routes")
                  (:file "server")
                  (:file "main")))))
+
+(defsystem "concal/tests"
+  :version "0.1.0"
+  :author "Claude Code"
+  :license "MIT"
+  :description "Tests for ConCal"
+  :depends-on ("concal"
+               "fiveam"
+               "local-time"
+               "mito")
+  :serial t
+  :pathname "tests/"
+  :components ((:file "package")
+               (:file "fixtures")
+               (:file "test-calendar")
+               (:file "test-api")
+               (:file "test-models")))
