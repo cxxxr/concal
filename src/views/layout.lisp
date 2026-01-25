@@ -11,6 +11,8 @@
   document.addEventListener('pointerdown', function(e) {
     var cell = e.target.closest('.day-cell');
     if (!cell) return;
+    // 右クリックの場合はタイマーを設定しない（contextmenuで処理）
+    if (e.button === 2) return;
 
     cell._longPressTimer = setTimeout(function() {
       cell._longPressed = true;
