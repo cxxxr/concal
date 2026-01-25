@@ -4,36 +4,32 @@
            #:stop-server))
 (in-package #:concal.server)
 
-(defvar *acceptor* nil
-  "The Hunchentoot acceptor instance.")
+(defvar *handler* nil
+  "The Clack handler instance.")
 
 (defun start-server ()
   "Start the web server."
-  (when *acceptor*
+  (when *handler*
     (stop-server))
-
-  ;; Set up static file handling
-  (push (hunchentoot:create-folder-dispatcher-and-handler
-         "/static/"
-         concal.config:*static-directory*)
-        hunchentoot:*dispatch-table*)
 
   ;; Set up routes
   (concal.routes:setup-routes)
 
-  ;; Create and start acceptor
-  (setf *acceptor*
-        (make-instance 'hunchentoot:easy-acceptor
-                       :address concal.config:*server-host*
-                       :port concal.config:*server-port*))
-  (hunchentoot:start *acceptor*)
+  ;; Start server with Clack
+  (setf *handler*
+        (clack:clackup
+         (concal.app:build-app)
+         :server :hunchentoot
+         :address concal.config:*server-host*
+         :port concal.config:*server-port*
+         :use-thread t))
   (format t "~&Server started on ~a:~d~%"
           concal.config:*server-host*
           concal.config:*server-port*))
 
 (defun stop-server ()
   "Stop the web server."
-  (when *acceptor*
-    (hunchentoot:stop *acceptor*)
-    (setf *acceptor* nil)
+  (when *handler*
+    (clack:stop *handler*)
+    (setf *handler* nil)
     (format t "~&Server stopped~%")))

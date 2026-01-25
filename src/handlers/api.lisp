@@ -15,10 +15,11 @@
             (day (parse-integer (aref groups 2))))
         (local-time:encode-timestamp 0 0 0 0 day month year)))))
 
-(defun handle-toggle (date-str)
+(defun handle-toggle (params)
   "Handle toggle request for a specific date.
    Returns updated day cell HTML for HTMX swap."
-  (let ((date (parse-date-string date-str)))
+  (let* ((date-str (cdr (assoc :date params)))
+         (date (parse-date-string date-str)))
     (if date
         (let* ((record (concal.models.habit-record:toggle-record date))
                (completed-p (concal.models.habit-record:habit-record-completed record))
@@ -28,38 +29,37 @@
                            nil today
                            :format '(:year "-" (:month 2) "-" (:day 2))))
                (is-today-p (string= date-str today-str))
-               ;; For simplicity, assume it's current month (could be improved)
-               (is-current-month-p t))
-          (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
-          (concal.views.components:render-day-cell date completed-p is-today-p is-current-month-p has-memo-p))
-        (progn
-          (setf (hunchentoot:return-code*) hunchentoot:+http-bad-request+)
-          "Invalid date format"))))
+               (is-current-month-p t)
+               (html (concal.views.components:render-day-cell
+                      date completed-p is-today-p is-current-month-p has-memo-p)))
+          `(200 (:content-type "text/html; charset=utf-8") (,html)))
+        `(400 (:content-type "text/plain; charset=utf-8") ("Invalid date format")))))
 
-(defun handle-get-record-form (date-str)
+(defun handle-get-record-form (params)
   "Handle GET request for record edit form.
    Returns modal form HTML for HTMX."
-  (let ((date (parse-date-string date-str)))
+  (let* ((date-str (cdr (assoc :date params)))
+         (date (parse-date-string date-str)))
     (if date
         (let* ((record (concal.models.habit-record:find-record-by-date date))
                (completed-p (and record (concal.models.habit-record:habit-record-completed record)))
                (memo (and record (concal.models.habit-record:habit-record-memo record)))
                (year (local-time:timestamp-year date))
                (month (local-time:timestamp-month date))
-               (day (local-time:timestamp-day date)))
-          (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
-          (concal.views.components:render-record-form date-str year month day completed-p memo))
-        (progn
-          (setf (hunchentoot:return-code*) hunchentoot:+http-bad-request+)
-          "Invalid date format"))))
+               (day (local-time:timestamp-day date))
+               (html (concal.views.components:render-record-form
+                      date-str year month day completed-p memo)))
+          `(200 (:content-type "text/html; charset=utf-8") (,html)))
+        `(400 (:content-type "text/plain; charset=utf-8") ("Invalid date format")))))
 
-(defun handle-update-record (date-str)
+(defun handle-update-record (params)
   "Handle POST request for record update (completed + memo).
    Returns updated day cell HTML for HTMX swap."
-  (let ((date (parse-date-string date-str)))
+  (let* ((date-str (cdr (assoc :date params)))
+         (date (parse-date-string date-str)))
     (if date
-        (let* ((completed-param (hunchentoot:post-parameter "completed"))
-               (memo-param (hunchentoot:post-parameter "memo"))
+        (let* ((completed-param (cdr (assoc "completed" params :test #'string=)))
+               (memo-param (cdr (assoc "memo" params :test #'string=)))
                (completed-p (string= completed-param "true"))
                (record (concal.models.habit-record:update-record
                         date
@@ -71,9 +71,8 @@
                            nil today
                            :format '(:year "-" (:month 2) "-" (:day 2))))
                (is-today-p (string= date-str today-str))
-               (is-current-month-p t))
-          (setf (hunchentoot:content-type*) "text/html; charset=utf-8")
-          (concal.views.components:render-day-cell date completed-p is-today-p is-current-month-p has-memo-p))
-        (progn
-          (setf (hunchentoot:return-code*) hunchentoot:+http-bad-request+)
-          "Invalid date format"))))
+               (is-current-month-p t)
+               (html (concal.views.components:render-day-cell
+                      date completed-p is-today-p is-current-month-p has-memo-p)))
+          `(200 (:content-type "text/html; charset=utf-8") (,html)))
+        `(400 (:content-type "text/plain; charset=utf-8") ("Invalid date format")))))

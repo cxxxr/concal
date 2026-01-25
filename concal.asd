@@ -3,7 +3,10 @@
   :author "Claude Code"
   :license "MIT"
   :description "Habit tracking calendar application"
-  :depends-on ("hunchentoot"
+  :depends-on ("ningle"
+               "clack"
+               "lack"
+               "lack-middleware-static"
                "spinneret"
                "mito"
                "sxql"
@@ -32,6 +35,7 @@
                   :components
                   ((:file "pages")
                    (:file "api")))
+                 (:file "app")
                  (:file "routes")
                  (:file "server")
                  (:file "main")))))
