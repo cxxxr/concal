@@ -4,5 +4,6 @@
 (in-package #:concal.db.migrations)
 
 (defun ensure-tables ()
-  "Ensure all database tables exist."
-  (mito:ensure-table-exists 'concal.models.habit-record:habit-record))
+  "Ensure all database tables exist and are up to date."
+  (mito:ensure-table-exists 'concal.models.habit-record:habit-record)
+  (mito:migrate-table 'concal.models.habit-record:habit-record))

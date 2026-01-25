@@ -42,9 +42,11 @@
                      (date-str (local-time:format-timestring
                                 nil date
                                 :format '(:year "-" (:month 2) "-" (:day 2))))
-                     (completed-p (gethash date-str records)))
+                     (record-info (gethash date-str records))
+                     (completed-p (getf record-info :completed))
+                     (has-memo-p (getf record-info :has-memo-p)))
                 (:raw (concal.views.components:render-day-cell
-                       date completed-p (string= date-str today-str) nil))))
+                       date completed-p (string= date-str today-str) nil has-memo-p))))
             ;; Current month's days
             (dotimes (i days-in-month)
               (let* ((day (1+ i))
@@ -52,9 +54,11 @@
                      (date-str (local-time:format-timestring
                                 nil date
                                 :format '(:year "-" (:month 2) "-" (:day 2))))
-                     (completed-p (gethash date-str records)))
+                     (record-info (gethash date-str records))
+                     (completed-p (getf record-info :completed))
+                     (has-memo-p (getf record-info :has-memo-p)))
                 (:raw (concal.views.components:render-day-cell
-                       date completed-p (string= date-str today-str) t))))
+                       date completed-p (string= date-str today-str) t has-memo-p))))
             ;; Next month's leading days
             (let* ((total-cells (+ first-day-of-week days-in-month))
                    (remaining (mod (- 7 (mod total-cells 7)) 7))
@@ -66,6 +70,8 @@
                        (date-str (local-time:format-timestring
                                   nil date
                                   :format '(:year "-" (:month 2) "-" (:day 2))))
-                       (completed-p (gethash date-str records)))
+                       (record-info (gethash date-str records))
+                       (completed-p (getf record-info :completed))
+                       (has-memo-p (getf record-info :has-memo-p)))
                   (:raw (concal.views.components:render-day-cell
-                         date completed-p (string= date-str today-str) nil)))))))))
+                         date completed-p (string= date-str today-str) nil has-memo-p)))))))))

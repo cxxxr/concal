@@ -3,6 +3,57 @@
   (:export #:render-page))
 (in-package #:concal.views.layout)
 
+(defun render-modal-script ()
+  "Render JavaScript for long-press and right-click modal handling."
+  "
+(function() {
+  // Long press detection (mobile)
+  document.addEventListener('pointerdown', function(e) {
+    var cell = e.target.closest('.day-cell');
+    if (!cell) return;
+
+    cell._longPressTimer = setTimeout(function() {
+      cell._longPressed = true;
+      htmx.ajax('GET', cell.dataset.formUrl, {target: '#modal-container'});
+    }, 500);
+  });
+
+  document.addEventListener('pointerup', function(e) {
+    var cell = e.target.closest('.day-cell');
+    if (cell && cell._longPressTimer) {
+      clearTimeout(cell._longPressTimer);
+      if (cell._longPressed) {
+        e.preventDefault();
+        cell._longPressed = false;
+      }
+    }
+  });
+
+  document.addEventListener('pointercancel', function(e) {
+    var cell = e.target.closest('.day-cell');
+    if (cell && cell._longPressTimer) {
+      clearTimeout(cell._longPressTimer);
+    }
+  });
+
+  document.addEventListener('pointermove', function(e) {
+    var cell = e.target.closest('.day-cell');
+    if (cell && cell._longPressTimer) {
+      clearTimeout(cell._longPressTimer);
+    }
+  });
+
+  // Right click detection (PC)
+  document.addEventListener('contextmenu', function(e) {
+    var cell = e.target.closest('.day-cell');
+    if (cell) {
+      e.preventDefault();
+      htmx.ajax('GET', cell.dataset.formUrl, {target: '#modal-container'});
+    }
+  });
+})();
+")
+
 (defun render-page (title body)
   "Render the main page layout with HTMX support."
   (spinneret:with-html-string
@@ -19,4 +70,6 @@
       (:script :src "https://unpkg.com/htmx.org@2.0.4"))
      (:body
       (:main :class "container"
-        (:raw body))))))
+        (:raw body))
+      (:div :id "modal-container")
+      (:script (:raw (render-modal-script)))))))
